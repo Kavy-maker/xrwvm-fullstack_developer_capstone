@@ -13,6 +13,7 @@ urlpatterns = [
     # path for login
     # API endpoint for login authentication (called by React frontend)
     path('api/login/', views.login_user, name='login'),  
+    
 
     # Path for serving the React login page
     path('login/', TemplateView.as_view(template_name="index.html"), name='react_login'),
