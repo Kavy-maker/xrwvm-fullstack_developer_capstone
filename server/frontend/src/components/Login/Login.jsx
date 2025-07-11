@@ -9,7 +9,9 @@ const Login = ({ onClose }) => {
   const [password, setPassword] = useState("");
   const [open,setOpen] = useState(true)
 
-  let login_url = window.location.origin+"/djangoapp/login";
+  //let login_url = window.location.origin+"/djangoapp/login";
+   let login_url = window.location.origin + "/api/login/";
+
 
   const login = async (e) => {
     e.preventDefault();
@@ -25,13 +27,24 @@ const Login = ({ onClose }) => {
         }),
     });
     
+    //const json = await res.json();
+    //if (json.status != null && json.status === "Authenticated") {
+        //sessionStorage.setItem('username', json.userName);
+        //setOpen(false);        
+    //}
+    //else {
+      //alert("The user could not be authenticated.")
+    //}
+
     const json = await res.json();
     if (json.status != null && json.status === "Authenticated") {
-        sessionStorage.setItem('username', json.userName);
-        setOpen(false);        
-    }
-    else {
-      alert("The user could not be authenticated.")
+      sessionStorage.setItem('username', json.userName);
+      setOpen(false);
+  
+      // ✅ Add redirect here — change "/dealers" or "/" to match your desired post-login page
+      window.location.href = "/dealers"; 
+    } else {
+      alert("The user could not be authenticated.");
     }
 };
 
