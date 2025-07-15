@@ -23,6 +23,7 @@ from djangoapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('djangoapp.urls')),
+    path('logout/', views.logout_request, name='logout'),
     path('', TemplateView.as_view(template_name="Home.html")),
     path('about/', TemplateView.as_view(template_name="About.html")),
     path('contact/', TemplateView.as_view(template_name="Contact.html")),
