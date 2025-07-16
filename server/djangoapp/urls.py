@@ -9,7 +9,7 @@ from . import views
 app_name = 'djangoapp'
 urlpatterns = [
     # # path for registration
-    
+    path('api/register/', views.registration, name='register'),
 
     # path for login
     # API endpoint for login authentication (called by React frontend)
@@ -38,5 +38,8 @@ urlpatterns = [
     
     #path for get_dealer_details
     path(route='dealer/<int:dealer_id>', view=views.get_dealer_details, name='dealer_details'),    
+
+    path('<path:resource>', TemplateView.as_view(template_name="index.html")),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
