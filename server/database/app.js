@@ -58,9 +58,8 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
 
 // Express route to fetch all dealerships
 app.get('/fetchDealers', async (req, res) => {
-    //Write your code here
     try {
-        const dealers = await Dealer.find();
+        const dealers = await Dealerships.find();  // corrected model name
         res.json(dealers);
     } catch (err) {
         res.status(500).send(err.message);
@@ -69,20 +68,19 @@ app.get('/fetchDealers', async (req, res) => {
 
 // Express route to fetch Dealers by a particular state
 app.get('/fetchDealers/:state', async (req, res) => {
-    //Write your code here
     try {
-        const dealers = await Dealer.find({ state: req.params.state });
+        const dealers = await Dealerships.find({ state: req.params.state });  // corrected
         res.json(dealers);
     } catch (err) {
         res.status(500).send(err.message);
     }
 });
 
+
 // Express route to fetch dealer by a particular id
 app.get('/fetchDealer/:id', async (req, res) => {
-    //Write your code here
     try {
-        const dealer = await Dealer.findById(req.params.id);
+        const dealer = await Dealerships.findById(req.params.id); // ✅ corrected
         if (dealer) {
             res.json(dealer);
         } else {
@@ -92,6 +90,7 @@ app.get('/fetchDealer/:id', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
 
 //Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
