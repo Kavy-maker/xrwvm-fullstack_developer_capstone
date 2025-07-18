@@ -85,6 +85,14 @@ def registration(request):
 # a list of dealerships
 # def get_dealerships(request):
 # ...
+def get_dealerships(request, state="All"):
+    if(state == "All"):
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = "/fetchDealers/"+state
+    dealerships = get_request(endpoint)
+    return JsonResponse({"status":200,"dealers":dealerships})
+
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 def get_dealer_reviews(request,dealer_id):
@@ -136,11 +144,8 @@ def get_cars(request):
     return JsonResponse({"CarModels":cars})
 
 
-#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
-def get_dealerships(request, state="All"):
-    if(state == "All"):
-        endpoint = "/fetchDealers"
-    else:
-        endpoint = "/fetchDealers/"+state
-    dealerships = get_request(endpoint)
-    return JsonResponse({"status":200,"dealers":dealerships})
+
+def populate_cars(request):  # ✅ Now it's a standalone view
+    from .populate import initiate
+    initiate()
+    return JsonResponse({"status": 200, "message": "Car data added!"})
