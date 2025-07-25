@@ -34,7 +34,9 @@ urlpatterns = [
 
  
     #path for get_dealerships
-    path(route='get_dealers/<str:state>', view=views.get_dealerships, name='get_dealers_by_state'),
+    #path(route='get_dealers/<str:state>', view=views.get_dealerships, name='get_dealers_by_state'),
+    path('get_dealers/', views.get_dealerships, name='get_dealers'),
+        path('get_dealers/<str:state>', views.get_dealerships, name='get_dealers_by_state'),
 
 
 
