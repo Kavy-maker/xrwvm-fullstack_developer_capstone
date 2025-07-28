@@ -13,7 +13,8 @@ from django.contrib.auth import login, authenticate
 import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
-from .populate import initiate
+#from .populate import initiate
+from djangoapp.scripts.populate import run
 from .models import CarMake, CarModel
 from .restapis import get_request, analyze_review_sentiments, post_review
 
@@ -136,7 +137,7 @@ def get_cars(request):
     count = CarMake.objects.filter().count()
     print(count)
     if(count == 0):
-        initiate()
+        run()
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
@@ -145,7 +146,6 @@ def get_cars(request):
 
 
 
-def populate_cars(request):  # ✅ Now it's a standalone view
-    from .populate import initiate
-    initiate()
+def populate_cars(request):
+    run()
     return JsonResponse({"status": 200, "message": "Car data added!"})

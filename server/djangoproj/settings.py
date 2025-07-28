@@ -39,6 +39,7 @@ REST_FRAMEWORK = {
 
 INSTALLED_APPS = [
     'djangoapp.apps.DjangoappConfig',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
