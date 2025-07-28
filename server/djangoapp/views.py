@@ -133,16 +133,34 @@ def add_review(request):
 
 
 # Create a `import CarMake & CarModel` .
+#def get_cars(request):
+    #count = CarMake.objects.filter().count()
+    #print(count)
+    #if(count == 0):
+        #run()
+    #car_models = CarModel.objects.select_related('car_make')
+    #cars = []
+    #for car_model in car_models:
+        #cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+    #return JsonResponse({"CarModels":cars})
+
 def get_cars(request):
-    count = CarMake.objects.filter().count()
-    print(count)
-    if(count == 0):
+    if CarMake.objects.count() == 0:
         run()
+
     car_models = CarModel.objects.select_related('car_make')
-    cars = []
-    for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
-    return JsonResponse({"CarModels":cars})
+    cars = [
+        {
+            "model": car_model.name,
+            "make": car_model.car_make.name,
+            "type": car_model.type,
+            "year": car_model.year
+        }
+        for car_model in car_models
+    ]
+
+    return JsonResponse(cars, safe=False)
+
 
 
 
