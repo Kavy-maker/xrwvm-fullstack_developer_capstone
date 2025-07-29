@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Car Inventory</title>
+</head>
+<body>
+  <h1>🚗 Car Inventory</h1>
+
+  <h2>Car Makes</h2>
+  <ul>
+    {% for make in makes %}
+      <li><strong>{{ make.name }}</strong>: {{ make.description }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Car Models</h2>
+  <ul>
+    {% for model in models %}
+      <li>{{ model.name }} ({{ model.type }}, {{ model.year }}) — {{ model.car_make.name }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

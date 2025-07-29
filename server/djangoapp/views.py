@@ -161,6 +161,18 @@ def get_cars(request):
 
     return JsonResponse(cars, safe=False)
 
+def show_inventory(request):
+    if CarMake.objects.count() == 0:
+        run()
+
+    makes = CarMake.objects.all()
+    models = CarModel.objects.select_related('car_make')
+    return render(request, 'inventory.html', {
+        'makes': makes,
+        'models': models,
+    })
+
+
 
 
 
