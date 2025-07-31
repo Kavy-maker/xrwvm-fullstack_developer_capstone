@@ -7,6 +7,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
+from django.core.management import call_command   # NEW
+from django.utils.timezone import now             # NEW
+import os       
+
 
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
@@ -171,6 +175,29 @@ def show_inventory(request):
         'makes': makes,
         'models': models,
     })
+
+def inventory_dashboard(request):
+    # Auto-populate if DB is empty
+    if CarMake.objects.count() == 0:
+        try:
+            fixture_path = os.path.join(os.path.dirname(__file__), 'fixtures/cars.json')
+            call_command('loaddata', fixture_path)
+        except Exception as e:
+            print(f"Error loading fixture: {e}")
+
+    makes = CarMake.objects.all()
+    models = CarModel.objects.select_related('car_make')
+    newest_model = models.order_by('-year').first()
+
+    context = {
+        'makes': makes,
+        'models': models,
+        'total_makes': makes.count(),
+        'total_models': models.count(),
+        'newest_model': newest_model,
+        'backup_time': now().strftime('%Y-%m-%d %H:%M:%S'),  # pretend timestamp
+    }
+    return render(request, 'inventory.html', context)    
 
 
 
