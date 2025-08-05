@@ -51,3 +51,14 @@ class CarModel(models.Model):
 
     def __str__(self):
         return self.name  # Return the name as the string representation
+
+
+class Dealer(models.Model):
+    full_name = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
+    zip = models.CharField(max_length=10)
+    state = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.full_name
