@@ -42,7 +42,10 @@ urlpatterns = [
 
     
     #path for get_dealer_details
-    path(route='dealer/<int:dealer_id>', view=views.get_dealer_details, name='dealer_details'),    
+    path(route='dealer/<int:dealer_id>', view=views.get_dealer_details, name='dealer_details'),
+
+    path('populate_all/', views.populate_all_data, name='populate_all_data'),
+    
 
     #path('<path:resource>', TemplateView.as_view(template_name="index.html")),
 

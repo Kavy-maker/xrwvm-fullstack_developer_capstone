@@ -19,6 +19,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 #from .populate import initiate
 from djangoapp.scripts.populate import run
+from djangoapp.scripts.populate import populate_dealers
 from .models import CarMake, CarModel, Dealer
 from .restapis import get_request, analyze_review_sentiments, post_review
 
@@ -181,10 +182,14 @@ def show_inventory(request):
 
     makes = CarMake.objects.all()
     models = CarModel.objects.select_related('car_make')
+    dealers = Dealer.objects.all()  # 👈 New line here
+
     return render(request, 'inventory.html', {
         'makes': makes,
         'models': models,
+        'dealers': dealers,  # 👈 New line here
     })
+
 
 def inventory_dashboard(request):
     # Auto-populate if DB is empty
@@ -216,3 +221,14 @@ def inventory_dashboard(request):
 def populate_cars(request):
     run()
     return JsonResponse({"status": 200, "message": "Car data added!"})
+
+
+def populate_dealer_data(request):
+    populate_dealers()
+    return JsonResponse({"status": 200, "message": "Dealer data populated successfully"})
+
+
+def populate_all_data(request):
+    run()
+    populate_dealers()
+    return JsonResponse({"status": 200, "message": "✅ Car and dealer data populated."})

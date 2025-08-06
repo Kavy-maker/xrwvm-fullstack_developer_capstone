@@ -29,4 +29,6 @@ urlpatterns = [
     path('contact/', TemplateView.as_view(template_name="Contact.html")),
     path('register/', TemplateView.as_view(template_name="index.html")),
     path('dealers/', TemplateView.as_view(template_name="index.html")),
+    #path('dealers/', views.show_inventory, name='dealer_inventory'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
