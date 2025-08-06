@@ -19,7 +19,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 #from .populate import initiate
 from djangoapp.scripts.populate import run
-from .models import CarMake, CarModel
+from .models import CarMake, CarModel, Dealer
 from .restapis import get_request, analyze_review_sentiments, post_review
 
 # Get an instance of a logger
@@ -91,13 +91,23 @@ def registration(request):
 # def get_dealerships(request):
 # ...
 def get_dealerships(request, state="All"):
-    if(state == "All"):
-        endpoint = "/fetchDealers"
+    if state == "All":
+        dealers = Dealer.objects.all()
     else:
-        endpoint = "/fetchDealers/"+state
-    dealerships = get_request(endpoint)
-    return JsonResponse({"status":200,"dealers":dealerships})
+        dealers = Dealer.objects.filter(state=state)
 
+    data = [
+        {
+            "id": d.id,
+            "full_name": d.full_name,
+            "city": d.city,
+            "address": d.address,
+            "zip": d.zip,
+            "state": d.state
+        }
+        for d in dealers
+    ]
+    return JsonResponse({"status": 200, "dealers": data})
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 def get_dealer_reviews(request,dealer_id):

@@ -145,3 +145,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
 
+APPEND_SLASH = True
+
