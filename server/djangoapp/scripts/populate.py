@@ -1,4 +1,6 @@
 from djangoapp.models import CarMake, CarModel, Dealer
+from djangoapp.models import Dealer
+
 
 def run():
     car_make_data = [
@@ -43,39 +45,24 @@ def run():
 
     return f"✅ Created {len(car_make_instances)} CarMake entries and {len(car_model_data)} CarModel entries."
 
-
 def populate_dealers():
-    dealer_data = [
-        {
-            "full_name": "Auto World Nairobi",
-            "city": "Nairobi",
-            "address": "123 Mombasa Rd",
-            "zip": "00100",
-            "state": "Nairobi"
-        },
-        {
-            "full_name": "Safari Motors Kisumu",
-            "city": "Kisumu",
-            "address": "456 Oginga Odinga St",
-            "zip": "40100",
-            "state": "Kisumu"
-        },
-        {
-            "full_name": "Mount Kenya Auto Thika",
-            "city": "Thika",
-            "address": "789 Kenyatta Highway",
-            "zip": "01000",
-            "state": "Kiambu"
-        }
+    if Dealer.objects.exists():
+        return "Dealers already populated."
+
+    dealers = [
+        Dealer(name="AutoHub", location="Nairobi"),
+        Dealer(name="DriveNation", location="Mombasa"),
     ]
-
-    for dealer in dealer_data:
-        Dealer.objects.get_or_create(**dealer)
-
-    return f"✅ Created {len(dealer_data)} Dealer entries."
+    Dealer.objects.bulk_create(dealers)
+    return f"✅ Populated {len(dealers)} dealers."
 
 
 def populate_all():
-    car_result = run()
+    car_result = run_car_population()
     dealer_result = populate_dealers()
     return f"{car_result}\n{dealer_result}"
+
+
+def run():
+    result = populate_all()
+    print(result)
