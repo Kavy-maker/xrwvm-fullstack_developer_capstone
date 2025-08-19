@@ -1,8 +1,8 @@
 from djangoapp.models import CarMake, CarModel, Dealer
-from djangoapp.models import Dealer
+#from djangoapp.models import Dealer
 
 
-def run():
+def run_car_population():
     car_make_data = [
         {"name":"NISSAN", "description":"Great cars. Japanese technology"},
         {"name":"Mercedes", "description":"Great cars. German technology"},
